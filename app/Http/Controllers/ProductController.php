@@ -42,8 +42,8 @@ class ProductController extends Controller
        if ($request->hasFile('images')) {
            foreach ($request->file('images') as $image) {
                $imageName = $image->getClientOriginalName();
-               $image->move(public_path('uploads/images'), $imageName);
-               $imagePath = 'public/uploads/images/' . $imageName;
+               $image->move(public_path('resources/views/images'), $imageName);
+               $imagePath = 'resources/views/images/' . $imageName;
                $imageData[] = $imagePath;
        }}
 

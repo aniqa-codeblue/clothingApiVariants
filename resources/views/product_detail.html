@@ -62,7 +62,6 @@
         }
 
         .price span {
-            text-decoration: line-through;
             color: #777;
             margin-right: 5px;
         }
@@ -254,7 +253,7 @@
 
         <div class="product-details">
             <h1 id="product-name">Loading...</h1>
-            <p id="product-description">Loading...</p>
+            <!-- <p id="product-description">Loading...</p> -->
             <p class="price">$<span id="product-price"></span></p>
             <p>Available Stock: <span id="product-quantity"></span></p>
 
@@ -278,22 +277,24 @@
 
             <div class="description">
                 <p><strong>DESCRIPTION</strong></p>
-                <p id="full-description">Loading...</p>
+                <p id="product-description">Loading...</p>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Get the product ID from the URL (example: product.html?id=1)
+            let product = null;
             let urlParams = new URLSearchParams(window.location.search);
             let productId = urlParams.get('id');
-            console.log("productId", productId);
             // let thisProduct = product.filter(value => {
             //     return value.id == productId
             // })[0];
 
-            fetch(`http://127.0.0.1:8000/api/show_product/${productId}`)
+            if (!productId) {
+                window.location.href = "/product_gallery.html";
+            }
+            fetch(`http://api.codeblue.agency/api/show_product/${productId}`)
                 .then(response => response.json())
                 .then(product => {
                     if (!product.id) {
@@ -303,10 +304,10 @@
 
                     // Update text content
                     document.getElementById("product-name").textContent = product.name;
-                    document.getElementById("product-description").textContent = product.description;
                     document.getElementById("product-price").textContent = product.price;
                     document.getElementById("product-quantity").textContent = product.quantity;
-                    document.getElementById("full-description").textContent = product.description;
+                    document.getElementById("product-description").textContent = product.description;
+                    //document.getElementById("full-description").textContent = product.description;
 
                     // Set main image
                     const mainImage = document.getElementById("main-image");

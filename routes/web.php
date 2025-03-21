@@ -33,10 +33,13 @@ Route::get('/display_products', [ProductController::class, 'index']);
 
 Route::get('/show_product/{id}', function ($id) {
     $product = Products::find($id); // Fetch product by ID
+    Log::info("Product Retrieved", ['product' => $product]); // Log product info
+
     if (!$product) {
         return response()->json(['message' => 'Product not found'], 404);
     }
-    return response()->json($product);
+
+    return response()->json($product->toArray()); // Convert model to array
 });
 
 Route::post('/products', [ProductController::class, 'store']);
