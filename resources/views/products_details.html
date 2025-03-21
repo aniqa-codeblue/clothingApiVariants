@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .product-container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="product-container">
+        <h1 id="product-name"></h1>
+        <img id="product-image" src="" alt="">
+        <p id="product-description"></p>
+        <p id="product-price"></p>
+    </div>
+
+    <script>
+        // Get Product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        // Fetch product details from API
+        fetch(`http://127.0.0.1:8000/api/show_product/${productId}`)
+            .then(response => response.json())
+            .then(product => {
+                let images = Array.isArray(product.images) ? product.images : JSON.parse(product.images);
+                let firstImage = images.length > 0 ? images[0] : 'placeholder.jpg';
+
+                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('product-image').src = firstImage;
+                document.getElementById('product-description').textContent = product.description;
+                document.getElementById('product-price').textContent = `$${product.price}`;
+            })
+            .catch(error => console.error('Error loading product details:', error));
+    </script>
+</body>
+
+</html>
