@@ -294,7 +294,7 @@
             if (!productId) {
                 window.location.href = "/product_gallery.html";
             }
-            fetch(`http://api.codeblue.agency/api/show_product/${productId}`)
+            fetch(`https://api.codeblue.agency/api/show_product/${productId}`)
                 .then(response => response.json())
                 .then(product => {
                     if (!product.id) {
