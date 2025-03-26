@@ -9,13 +9,21 @@ class Products extends Model
 {
     use HasFactory;
 
-    protected $table = 'all_products';
+    protected $table = 'products';        //table name
 
-    protected $fillable = ['name', 'description', 'price', 'quantity', 'size', 'color', 'images'];
+    protected $fillable = ['name', 'description', 'price', 'quantity'];
 
-    protected $casts = [
-        'size' => 'array',
-        'color' => 'array',
-        'images' => 'array',
-    ];
+    // protected $casts = [
+    //     'size' => 'array',
+    //     'color' => 'array',
+    //     'images' => 'array',
+    // ];
+
+    public function images() {
+        return $this->hasMany(ProductImages::class);
+    }
+
+    public function variants() {
+        return $this->hasMany(ProductVariants::class);
+    }
 }
